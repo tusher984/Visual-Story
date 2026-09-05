@@ -44,28 +44,20 @@
       var list = packagesIn(c.id);
       return (
         '<a href="#' + c.id + '">' +
+        '<span class="index__label">' +
         '<span class="index__name">' + esc(c.name) + '</span>' +
         '<span class="index__n">' + list.length +
         (list.length === 1 ? ' package' : ' packages') + '</span>' +
+        '</span>' +
         '<span class="index__p">' + range(list) + '</span>' +
         '</a>'
       );
     }).join('');
   }
 
-  /* ---- the range that sits opposite each group heading ------------------- */
-
-  function renderMeta() {
-    CATEGORIES.forEach(function (c) {
-      var host = document.querySelector('[data-meta="' + c.id + '"]');
-      if (!host) return;
-      host.textContent = range(packagesIn(c.id));
-    });
-  }
-
   /* ---- one entry per package, nothing hidden ----------------------------
-     Name and price share a baseline; the price is set in the serif with
-     tabular figures, so every number in a column lines up by itself. */
+     Name and price share a baseline; the price is set in tabular figures, so
+     every number in a column lines up by itself. */
 
   function renderCategories() {
     CATEGORIES.forEach(function (c) {
@@ -97,7 +89,7 @@
   function renderExperience() {
     var host = document.querySelector('[data-experience]');
     if (!host) return;
-    host.innerHTML = D.EXPERIENCE.items.map(function (i) {
+    host.innerHTML = D.EXPERIENCE.map(function (i) {
       return '<li>' + esc(i) + '</li>';
     }).join('');
   }
@@ -110,23 +102,10 @@
     }).join('');
   }
 
-  /* ---- photo mounts ------------------------------------------------------
-     Frames start empty and name the file they are waiting for, so a gallery
-     with nothing in it yet reads as a set of mounts, not broken images. */
-
-  function wireFrames() {
-    document.querySelectorAll('.frame').forEach(function (frame) {
-      var img = frame.querySelector('img');
-      if (!img) return;
-      function filled() { frame.dataset.empty = 'false'; }
-      function blank() { frame.dataset.empty = 'true'; }
-      if (img.complete) { img.naturalWidth > 0 ? filled() : blank(); }
-      img.addEventListener('load', filled);
-      img.addEventListener('error', blank);
-    });
-  }
-
-  /* ---- which section am I in --------------------------------------------- */
+  /* ---- which section am I in ---------------------------------------------
+     The observation band is a thin strip across the middle of the screen, so
+     usually one section is inside it and sometimes none — while the hero fills
+     the screen, nothing in the masthead should be marked. */
 
   function wireNav() {
     var links = Array.prototype.slice.call(document.querySelectorAll('.top nav a[href^="#"]'));
@@ -134,13 +113,17 @@
     var sections = links.map(function (a) {
       return document.getElementById(a.getAttribute('href').slice(1));
     });
+    var inBand = [];
 
     var obs = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        links.forEach(function (a, i) {
-          a.setAttribute('aria-current', sections[i] === e.target ? 'true' : 'false');
-        });
+        var at = inBand.indexOf(e.target);
+        if (e.isIntersecting && at < 0) inBand.push(e.target);
+        if (!e.isIntersecting && at > -1) inBand.splice(at, 1);
+      });
+      links.forEach(function (a, i) {
+        if (inBand.indexOf(sections[i]) > -1) a.setAttribute('aria-current', 'true');
+        else a.removeAttribute('aria-current');
       });
     }, { rootMargin: '-45% 0px -50% 0px' });
 
@@ -151,11 +134,9 @@
 
   function start() {
     renderIndex();
-    renderMeta();
     renderCategories();
     renderExperience();
     renderTerms();
-    wireFrames();
     wireNav();
 
     document.querySelectorAll('[data-count]').forEach(function (el) {

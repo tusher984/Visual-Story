@@ -1,22 +1,26 @@
 /* ==========================================================================
-   VISUAL STORY 2026 — price list
+   VISUAL STORY 2026 — packages & prices
    --------------------------------------------------------------------------
-   Two voices. Spectral sets the names and every number; Archivo does the
-   explaining. Prices hang in one right-aligned column of tabular figures, the
-   way a good menu sets them, so eighteen of them can be compared without
-   reading a word. No boxes, no tinted bands — hairlines and space instead,
-   because the only colour on this page should come from the photographs.
+   The page is the dark room; the type is the print. Instrument Serif names
+   things, Archivo explains them, and the only warm light here is the
+   safelight amber the prices are set in — so eighteen figures can be found
+   and compared without reading a word. Hairlines and space instead of boxes,
+   because nothing on this page should compete with the photographs.
    ========================================================================== */
 
 :root {
-  --paper: #ffffff;
-  --ink: #101418;   /* the dense black of a well-printed photograph */
-  --quiet: #5d6470;
-  --rule: #dcdee2;
-  --faint: #eef0f2;
+  color-scheme: dark;
 
-  --sans: 'Archivo', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --serif: 'Spectral', 'Anek Bangla', Georgia, 'Times New Roman', serif;
+  --room: #0b0c0d;      /* the dark room */
+  --print: #ece8e1;     /* the warm white of a fibre print */
+  --quiet: #969ba1;
+  --rule: #23272a;
+  --safelight: #dda85f; /* the only light allowed in a dark room */
+
+  /* Anek Bangla sits in both Latin stacks because ৳ is missing from the two
+     Latin families, and the subset we load carries it. */
+  --sans: 'Archivo', 'Anek Bangla', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --serif: 'Instrument Serif', 'Anek Bangla', Georgia, 'Times New Roman', serif;
   --bn: 'Anek Bangla', 'Noto Sans Bengali', 'Kohinoor Bangla',
     'Bangla Sangam MN', 'Nirmala UI', sans-serif;
 
@@ -32,8 +36,8 @@ html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 
 body {
   margin: 0;
-  background: var(--paper);
-  color: var(--ink);
+  background: var(--room);
+  color: var(--print);
   font-family: var(--sans);
   font-size: 1rem;
   line-height: 1.62;
@@ -43,26 +47,30 @@ body {
   text-decoration-thickness: from-font;
 }
 
-img { display: block; max-width: 100%; height: auto; }
 ul, ol { margin: 0; padding: 0; list-style: none; }
 p { margin: 0; }
 a { color: inherit; }
 button { font: inherit; color: inherit; }
-code { font-size: 0.9em; }
+code { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.88em; color: var(--print); }
+
+::selection { background: var(--safelight); color: var(--room); }
 
 h1, h2, h3 { margin: 0; font-weight: 400; }
 
+/* Instrument Serif is a display face: high contrast, one weight, and it wants
+   to be set large and tight. It gets the headline and the group names only. */
 h1, h2 {
   font-family: var(--serif);
-  line-height: 1.07;
-  letter-spacing: -0.015em;
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: -0.005em;
   text-wrap: balance;
 }
 
-h1 { font-size: clamp(2.4rem, 5.4vw, 4.15rem); }
-h2 { font-size: clamp(1.65rem, 3.1vw, 2.4rem); }
+h1 { font-size: clamp(2.7rem, 6.4vw, 5.1rem); }
+h2 { font-size: clamp(1.9rem, 3.6vw, 2.85rem); }
 
-:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--safelight); outline-offset: 3px; }
 
 .sr {
   position: absolute;
@@ -81,18 +89,23 @@ h2 { font-size: clamp(1.65rem, 3.1vw, 2.4rem); }
   z-index: 10;
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
+  align-items: center;
   gap: 0.4rem 2rem;
   padding: 1rem var(--gut);
-  background: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(10px);
+  background: rgba(11, 12, 13, 0.88);
+  backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--rule);
 }
 
-/* The studio signs its work in two scripts, so the logotype is set in two. */
-.mark { display: inline-flex; align-items: baseline; gap: 0.55rem; text-decoration: none; }
-.mark b { font-family: var(--serif); font-size: 1.28rem; font-weight: 500; letter-spacing: -0.01em; }
-.mark i { font-family: var(--bn); font-size: 1rem; font-style: normal; color: var(--quiet); }
+/* The studio's own logotype, cropped to the script and recoloured to the print
+   white, so the mark in the corner is the one it signs its photographs with. */
+.mark { display: inline-flex; align-items: center; text-decoration: none; }
+
+.mark__logo {
+  display: block;
+  width: auto;
+  height: clamp(2.3rem, 4.4vw, 2.9rem);
+}
 
 .top nav {
   display: flex;
@@ -103,45 +116,69 @@ h2 { font-size: clamp(1.65rem, 3.1vw, 2.4rem); }
 }
 
 .top nav a { color: var(--quiet); text-decoration: none; }
-.top nav a:hover { color: var(--ink); }
-.top nav a[aria-current='true'] { color: var(--ink); text-decoration: underline; }
+.top nav a:hover { color: var(--print); }
+.top nav a[aria-current='true'] { color: var(--print); text-decoration: underline; }
 
 /* ---- hero --------------------------------------------------------------- */
 
-.hero { padding: clamp(3.25rem, 8vw, 6.5rem) var(--gut) clamp(2.5rem, 5vw, 4rem); }
-.hero h1 { max-width: 21ch; }
+.hero { padding: clamp(3.5rem, 9vw, 7.5rem) var(--gut) clamp(2.5rem, 5vw, 4rem); }
+.hero h1 { max-width: 20ch; }
 
 .hero__lede {
-  max-width: 46ch;
-  margin-top: clamp(1.1rem, 2vw, 1.6rem);
+  max-width: 52ch;
+  margin-top: clamp(1.2rem, 2.2vw, 1.8rem);
   font-size: clamp(1rem, 1.2vw, 1.12rem);
   color: var(--quiet);
 }
 
-/* ---- the price index — the one place this page raises its voice ---------- */
+/* ---- the price index ----------------------------------------------------
+   The one place this page raises its voice: four rows, four amber figures,
+   the whole studio priced before you have read a package name. */
 
-.index { margin-top: clamp(2.25rem, 4.5vw, 3.5rem); border-top: 1px solid var(--ink); }
+.index { margin-top: clamp(2.5rem, 5vw, 4rem); border-top: 1px solid var(--print); }
 
+/* Two columns rather than a wrapping flex row: the price keeps its own cell at
+   every width, so a long group name wraps under itself instead of pushing its
+   figure onto a second line while the shorter rows keep theirs inline. */
 .index a {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: baseline;
-  gap: 0.15rem 1rem;
-  padding: 1.05rem 0;
+  column-gap: clamp(1rem, 2.5vw, 2rem);
+  row-gap: 0.15rem;
+  padding: 1.25rem 0;
   border-bottom: 1px solid var(--rule);
   text-decoration: none;
 }
 
+.index__label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.1rem 0.8rem;
+}
+
 .index a:hover .index__name { text-decoration: underline; }
-.index__name { font-size: 1.02rem; font-weight: 500; }
+.index__name { font-size: 1.06rem; font-weight: 500; }
 .index__n { font-size: 0.84rem; color: var(--quiet); }
 
 .index__p {
-  margin-left: auto;
-  font-family: var(--serif);
-  font-size: clamp(1.05rem, 1.5vw, 1.24rem);
+  justify-self: end;
+  font-size: clamp(1.15rem, 1.7vw, 1.45rem);
+  font-weight: 500;
   font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  color: var(--safelight);
   white-space: nowrap;
+}
+
+/* One quiet line under the index, holding the three things every package
+   includes — so they are stated once instead of inside all sixteen. */
+.hero__note {
+  max-width: 44ch;
+  margin-top: clamp(1.4rem, 2.6vw, 2rem);
+  font-size: 0.9rem;
+  color: var(--quiet);
 }
 
 /* ---- calls to action ---------------------------------------------------- */
@@ -151,169 +188,139 @@ h2 { font-size: clamp(1.65rem, 3.1vw, 2.4rem); }
   flex-wrap: wrap;
   align-items: center;
   gap: 0.9rem 1.6rem;
-  margin-top: clamp(1.6rem, 3vw, 2.2rem);
+  margin-top: clamp(1.8rem, 3.2vw, 2.5rem);
 }
 
 .btn {
   display: inline-flex;
   align-items: center;
-  padding: 0.78rem 1.5rem;
-  border: 1px solid var(--ink);
-  border-radius: 2px;
-  background: var(--ink);
-  color: var(--paper);
+  padding: 0.8rem 1.55rem;
+  border: 1px solid var(--print);
+  background: var(--print);
+  color: var(--room);
   font-size: 0.92rem;
   font-weight: 500;
   text-decoration: none;
   cursor: pointer;
 }
 
-.btn:hover { background: var(--paper); color: var(--ink); }
+.btn:hover { background: transparent; color: var(--print); }
 
 .lnk { font-size: 0.92rem; text-decoration-color: var(--quiet); }
-.lnk:hover { text-decoration-color: var(--ink); }
+.lnk:hover { text-decoration-color: var(--print); }
 
 /* ---- sections ----------------------------------------------------------- */
 
-.band { padding: clamp(3rem, 6.5vw, 5.5rem) var(--gut); border-top: 1px solid var(--rule); }
+.band { padding: clamp(3.25rem, 7vw, 6rem) var(--gut); border-top: 1px solid var(--rule); }
 .wrap { max-width: var(--measure); margin-inline: auto; }
 
-.band__head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 0.5rem 2rem;
-  margin-bottom: clamp(1.6rem, 3.5vw, 2.6rem);
-}
+/* Each group's price range is already printed in the index at the top of the
+   page, so the heading here carries nothing but its own name and its lead. */
+.band__head { margin-bottom: clamp(1.8rem, 3.5vw, 2.8rem); }
 
-.band__head h2 { max-width: 24ch; }
-
-.band__meta {
-  font-family: var(--serif);
-  font-size: clamp(1rem, 1.3vw, 1.14rem);
-  font-variant-numeric: tabular-nums;
-  color: var(--quiet);
-  white-space: nowrap;
-}
+.band__head h2 { max-width: 22ch; }
 
 .band__lead {
-  flex-basis: 100%;
-  max-width: 62ch;
-  margin-top: 0.35rem;
+  max-width: 60ch;
+  margin-top: 0.5rem;
   color: var(--quiet);
 }
 
-.aside { margin-top: clamp(1.5rem, 3vw, 2.25rem); max-width: 62ch; font-size: 0.88rem; color: var(--quiet); }
-
-/* ---- one entry per package ---------------------------------------------- */
-
-.list {
-  display: grid;
-  gap: clamp(1.9rem, 3.5vw, 2.9rem) clamp(2.25rem, 5vw, 4.5rem);
-  grid-template-columns: repeat(auto-fit, minmax(21rem, 1fr));
+.aside {
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+  max-width: 60ch;
+  font-size: 0.88rem;
+  color: var(--quiet);
 }
 
-.item { padding-top: 1.05rem; border-top: 1px solid var(--rule); }
+/* ---- one entry per package ----------------------------------------------
+   Name and price share a baseline. The price is the only warm thing in the
+   entry, set in tabular figures so a column of them lines up by itself. */
+
+/* min() in the track minimum so a narrow screen collapses the grid instead of
+   pushing a fixed-width track off the side of the page. */
+.list {
+  display: grid;
+  gap: clamp(2rem, 3.5vw, 3rem) clamp(2.25rem, 5vw, 4.5rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(21rem, 100%), 1fr));
+}
+
+.item { padding-top: 1.1rem; border-top: 1px solid var(--rule); }
 
 .item__head { display: flex; align-items: baseline; gap: 1rem; }
 
 .item__name {
   flex: 1;
-  font-family: var(--serif);
-  font-size: 1.2rem;
-  font-weight: 500;
-  letter-spacing: -0.005em;
-  line-height: 1.25;
+  font-size: 1.06rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
 }
 
 .item__price {
-  font-family: var(--serif);
-  font-size: 1.2rem;
+  font-size: 1.12rem;
   font-weight: 500;
   font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  color: var(--safelight);
   white-space: nowrap;
   text-align: right;
 }
 
 .item__price small {
   display: block;
-  font-family: var(--sans);
   font-size: 0.7rem;
   font-weight: 400;
+  letter-spacing: 0;
   color: var(--quiet);
 }
 
-.item__blurb { margin-top: 0.55rem; max-width: 44ch; font-size: 0.9rem; color: var(--quiet); }
+.item__blurb { margin-top: 0.6rem; max-width: 44ch; font-size: 0.9rem; color: var(--quiet); }
 
 /* Hanging indent, so a line that wraps stays inside its own column. */
-.item__inc { margin-top: 0.95rem; display: grid; gap: 0.26rem; font-size: 0.9rem; }
+.item__inc { margin-top: 1rem; display: grid; gap: 0.28rem; font-size: 0.9rem; }
 .item__inc li { padding-left: 0.95rem; text-indent: -0.95rem; }
-.item__inc li::before { content: '–'; margin-right: 0.4rem; color: #a7adb6; }
+.item__inc li::before { content: '–'; margin-right: 0.4rem; color: #5a6066; }
 
-.item__note { margin-top: 0.85rem; font-size: 0.82rem; color: var(--quiet); }
+.item__note { margin-top: 0.9rem; font-size: 0.82rem; color: var(--quiet); }
 
 /* ---- experience & terms -------------------------------------------------- */
 
-.split {
+/* Eight short lines would look stranded across the full measure, so they run
+   in two even columns of four, each line keeping its own hairline. */
+.plain {
   display: grid;
-  gap: clamp(1.75rem, 3.5vw, 2.75rem) clamp(2.25rem, 5vw, 4.5rem);
-  grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
-  align-items: start;
-}
-
-.plain li { padding: 0.62rem 0; border-top: 1px solid var(--rule); font-size: 0.95rem; }
-
-.terms {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(25rem, 100%), 1fr));
   column-gap: clamp(2.25rem, 5vw, 4.5rem);
 }
 
-.terms > div { padding: 1rem 0; border-top: 1px solid var(--rule); }
-.terms dt { font-family: var(--serif); font-size: 1.06rem; font-weight: 500; }
-.terms dd { margin: 0.25rem 0 0; max-width: 46ch; font-size: 0.9rem; color: var(--quiet); }
+.plain li { padding: 0.68rem 0; border-top: 1px solid var(--rule); font-size: 0.95rem; }
 
-/* ---- photo mounts -------------------------------------------------------
-   Empty frames name the file they are waiting for, so an unfinished gallery
-   reads as a set of mounts rather than a page of broken images. */
-
-.strip { display: grid; gap: 0.85rem; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); }
-.frame { margin: 0; }
-
-.frame__well {
+.terms {
   display: grid;
-  place-items: center;
-  aspect-ratio: 4 / 5;
-  overflow: hidden;
-  padding: 1rem;
-  background: var(--faint);
-  border: 1px solid var(--rule);
-  border-radius: 2px;
+  grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
+  column-gap: clamp(2.25rem, 5vw, 4.5rem);
 }
 
-.frame img { width: 100%; height: 100%; object-fit: cover; }
-.frame[data-empty='true'] img { display: none; }
-.frame[data-empty='false'] .frame__wait { display: none; }
-
-.frame__wait { max-width: 26ch; font-size: 0.74rem; line-height: 1.5; text-align: center; color: var(--quiet); }
-.frame__wait code { display: block; margin-top: 0.3rem; font-weight: 500; color: var(--ink); overflow-wrap: anywhere; }
-.frame figcaption { padding-top: 0.5rem; font-size: 0.8rem; color: var(--quiet); }
+.terms > div { padding: 1.05rem 0; border-top: 1px solid var(--rule); }
+.terms dt { font-size: 1rem; font-weight: 600; letter-spacing: -0.01em; }
+.terms dd { margin: 0.25rem 0 0; max-width: 46ch; font-size: 0.9rem; color: var(--quiet); }
 
 /* ---- the closing signature ---------------------------------------------- */
 
-.end { border-top: 1px solid var(--ink); }
-.end h2 { max-width: 20ch; }
-.end__lede { max-width: 48ch; margin-top: 1rem; color: var(--quiet); }
+.end { border-top: 1px solid var(--print); }
+.end h2 { max-width: 18ch; }
+.end__lede { max-width: 48ch; margin-top: 1.1rem; color: var(--quiet); }
 
+/* A colophon rather than a footer row: the logotype, what the studio believes,
+   what it shoots, and where to find it — four columns that collapse in order. */
 .sign {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 0.8rem 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(13rem, 100%), 1fr));
+  align-items: start;
+  gap: 1.4rem clamp(1.5rem, 3vw, 2.5rem);
   margin-top: clamp(2.5rem, 5vw, 4rem);
-  padding-top: 1.35rem;
+  padding-top: 1.4rem;
   border-top: 1px solid var(--rule);
   font-size: 0.82rem;
   color: var(--quiet);
@@ -323,80 +330,30 @@ h2 { font-size: clamp(1.65rem, 3.1vw, 2.4rem); }
   font-family: var(--bn);
   font-size: clamp(1.5rem, 3.5vw, 2.1rem);
   line-height: 1.1;
-  color: var(--ink);
+  color: var(--print);
 }
 
 .sign p { max-width: 34ch; }
+.sign a { text-decoration-color: var(--quiet); }
+.sign a:hover { color: var(--print); }
 
-/* ---- facebook post kit -------------------------------------------------- */
-
-.kit { display: grid; gap: 1.25rem; }
-
-.post { border: 1px solid var(--rule); border-radius: 2px; overflow: hidden; }
-
-.post__top {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem 1rem;
-  padding: 0.8rem 1.1rem;
-  border-bottom: 1px solid var(--rule);
-  background: var(--faint);
-}
-
-.post__title { font-family: var(--serif); font-size: 1.02rem; font-weight: 500; }
-.post__len { font-size: 0.8rem; color: var(--quiet); font-variant-numeric: tabular-nums; }
-
-.copy {
-  margin-left: auto;
-  padding: 0.42rem 0.9rem;
-  border: 1px solid var(--ink);
-  border-radius: 2px;
-  background: var(--ink);
-  color: var(--paper);
-  font-size: 0.84rem;
-  font-weight: 500;
-  cursor: pointer;
-}
-
-.copy[data-state='done'],
-.copy[data-state='blocked'] { background: transparent; color: var(--ink); }
-
-.post__text {
-  padding: 1.1rem;
-  font-family: var(--serif);
-  font-size: 0.94rem;
-  line-height: 1.66;
-  white-space: pre-wrap;
-}
-
-.post__hint { padding: 0 1.1rem 1.1rem; max-width: 62ch; font-size: 0.82rem; color: var(--quiet); }
-
-/* The kit is a working page, not a shop window, so its title is set at the
-   size of a section heading rather than a hero. */
-.band__head h1 { font-size: clamp(1.75rem, 3.1vw, 2.4rem); max-width: 24ch; }
+/* One address, on its own line under the colophon. */
+.sign__links { display: grid; gap: 0.3rem; justify-items: start; }
+.sign__links a { overflow-wrap: anywhere; }
 
 /* ---- small screens ------------------------------------------------------- */
 
 @media (max-width: 36rem) {
   /* Two wrapped rows of navigation pinned to the top would eat a quarter of a
      phone screen, so below this width the masthead scrolls away. */
-  .top { position: static; gap: 0.3rem 1rem; padding-block: 0.85rem; }
+  .top { position: static; gap: 0.5rem 1rem; padding-block: 0.85rem; }
   .top nav { width: 100%; margin-left: 0; font-size: 0.85rem; }
   .btn { width: 100%; justify-content: center; }
   .list { grid-template-columns: 1fr; }
-  .index__p { font-size: 1.05rem; }
-  .strip { grid-template-columns: 1fr 1fr; }
-}
-
-/* ---- print --------------------------------------------------------------- */
-
-@media print {
-  .top, .cta, .strip, .copy { display: none; }
-  .band, .hero { padding: 1.25rem 0; }
-  .item { break-inside: avoid; }
-  body { font-size: 10.5pt; color: #000; }
-  a { text-decoration: none; }
+  /* Below this width no row fits its name, its count and its figure on one
+     line, so every price drops to its own row and the column keeps its edge. */
+  .index a { grid-template-columns: 1fr; padding: 1.05rem 0; }
+  .index__p { font-size: 1.2rem; }
 }
 
 /* ---- reduced motion ------------------------------------------------------ */
@@ -405,12 +362,4 @@ h2 { font-size: clamp(1.65rem, 3.1vw, 2.4rem); }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
-
-
-
-
-
-
-
-
 

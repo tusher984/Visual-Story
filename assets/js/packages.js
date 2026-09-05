@@ -2,8 +2,8 @@
    VISUAL STORY 2026 — package data
    --------------------------------------------------------------------------
    THIS IS THE ONLY FILE YOU NEED TO EDIT TO CHANGE PRICES OR PACKAGES.
-   Both the website (index.html) and the Facebook post kit (facebook-kit.html)
-   read from here, so a change made once shows up in both places.
+   index.html reads from here, so one edit updates the package entry, the
+   range beside its group heading and the price index at the top of the page.
 
    Each package looks like this:
 
@@ -17,45 +17,24 @@
        note:     'small line under the list, or null'
      }
 
-   Every line in `includes` becomes one bullet on the website and one bullet in
-   the Facebook post, so that list is where you say what a package contains —
-   crew, hours, prints and delivery all go in there as plain sentences.
+   `includes` holds only what makes this package different from the one below
+   it in price — crew, hours, outfits, album. Editing, high-resolution
+   delivery and unlimited coverage are promised once on the page itself, so
+   they are not repeated inside every package.
    ========================================================================== */
 
 const CURRENCY = '৳'; // ৳ Bengali taka sign
 
 /* CATEGORIES ---------------------------------------------------------------
-   One section on the website, one Facebook post.                          */
+   One section on the website, in this order. `name` is the label used in the
+   price index at the top of the page; it should match the heading that
+   section carries in index.html.                                          */
 
 const CATEGORIES = [
-  {
-    id: 'portraits',
-    name: 'Portrait & personal photography',
-    short: 'Portraits',
-    lead: 'Sessions built around one person. You choose the light, the location and how many looks you want to bring.',
-    fbTitle: 'PORTRAIT & PERSONAL PHOTOGRAPHY'
-  },
-  {
-    id: 'events',
-    name: 'Wedding & event photography',
-    short: 'Events',
-    lead: 'Stills only. The crew grows with the package, so pick the size that matches your venue and guest count.',
-    fbTitle: 'WEDDING & EVENT PHOTOGRAPHY'
-  },
-  {
-    id: 'cinema',
-    name: 'Photography + cinematography',
-    short: 'Photo + cinema',
-    lead: 'Photographs and a film from the same day. Every package includes a full-length Full HD film and a short highlight trailer.',
-    fbTitle: 'PHOTOGRAPHY + CINEMATOGRAPHY'
-  },
-  {
-    id: 'weddings',
-    name: 'Wedding stories',
-    short: 'Wedding stories',
-    lead: 'One streamlined wedding package, priced per event, for couples who want the day covered without building a large crew.',
-    fbTitle: 'WEDDING STORIES'
-  }
+  { id: 'portraits', name: 'Portrait & personal photography' },
+  { id: 'events', name: 'Wedding & event photography' },
+  { id: 'cinema', name: 'Photography + cinematography' },
+  { id: 'weddings', name: 'The wedding package' }
 ];
 
 const PACKAGES = [
@@ -65,89 +44,39 @@ const PACKAGES = [
     cat: 'portraits',
     name: 'Outdoor portrait',
     price: 5000,
-    blurb: 'A relaxed outdoor session built around natural light, beautiful locations and your personality.',
+    blurb: 'A relaxed session on location, built around natural light and your own personality.',
     includes: [
-      'Outdoor photo session',
+      'Outdoor location of your choice',
       'Up to 3 outfit changes',
-      'Up to 15 professionally retouched photographs',
-      'High-resolution digital delivery'
+      'Up to 15 professionally retouched photographs'
     ],
     note: 'Additional outfit: ৳200 each'
   },
   {
     id: 'studio-portrait',
     cat: 'portraits',
-    name: 'Studio portrait',
-    price: 12000,
-    blurb: 'A complete studio portrait experience with professional lighting and styling.',
+    name: 'Studio portrait & portfolio',
+    price: 12500,
+    blurb: 'A full studio session with professional lighting, styling and a makeover — for a portrait to keep or a portfolio to send out.',
     includes: [
-      'Studio / premium interior location',
+      'Studio or premium interior location',
       'Makeover',
       'Up to 5 outfit changes',
       'Up to 20 professionally retouched photographs',
-      'Up to 4 hours of shooting',
-      'High-resolution digital delivery'
+      'Up to 4 hours of shooting'
     ],
-    note: 'Additional outfit: ৳200 each'
+    note: 'Suits models, actors, performers, creators, personal branding and professional profiles. Additional outfit: ৳200 each'
   },
-  {
-    id: 'portfolio-session',
-    cat: 'portraits',
-    name: 'Portfolio session',
-    price: 12500,
-    blurb: 'Built for models, actors, performers, creators and professionals who need a strong visual portfolio.',
-    includes: [
-      'Professional studio session',
-      'Up to 5 outfit changes',
-      'Up to 20 professionally retouched photographs',
-      'Up to 4 hours of shooting',
-      'High-resolution digital delivery'
-    ],
-    note: 'Made for models, actors, performers, creators, personal branding and professional profiles.'
-  },
-  /* EVENTS ------------------------------------------------------------- */
-  {
-    id: 'mini',
-    cat: 'events',
-    name: 'Mini photography',
-    price: 1500,
-    blurb: 'A simple package for small events and intimate occasions.',
-    includes: [
-      '1 Photographer',
-      'Up to 2 hours',
-      '10–15 specially edited photographs'
-    ],
-    note: null
-  },
+  /* EVENTS — stills only. The ladder is crew, then the album. ------------ */
   {
     id: 'super-saver',
     cat: 'events',
     name: 'Super saver photography',
-    price: 4000,
-    blurb: 'An affordable single-event photography package.',
+    price: 5000,
+    blurb: 'One photographer for one event. The simplest way to have the day photographed properly.',
     includes: [
       'Chief Photographer',
-      'Up to 5 hours',
-      'Unlimited photographs captured during coverage',
-      'Professionally edited photographs',
-      'High-resolution digital delivery'
-    ],
-    note: null
-  },
-  {
-    id: 'star-saver',
-    cat: 'events',
-    name: 'Star saver photography',
-    price: 5500,
-    blurb: 'Super saver coverage with a set of matte prints to keep.',
-    includes: [
-      'Chief Photographer',
-      'Up to 5 hours',
-      'Unlimited photographs captured during coverage',
-      'Professionally edited photographs',
-      '100 × 4R printed photographs',
-      'Matte paper',
-      'High-resolution digital delivery'
+      'Up to 5 hours'
     ],
     note: null
   },
@@ -156,16 +85,11 @@ const PACKAGES = [
     cat: 'events',
     name: 'Economy photography',
     price: 9000,
-    blurb: 'Two photographers, so nothing on the far side of the room gets missed.',
+    blurb: 'A second photographer, so nothing on the far side of the room gets missed.',
     includes: [
       'Chief Photographer',
       '1 Senior Photographer',
-      'Up to 5 hours',
-      'Unlimited photographs captured during coverage',
-      'Professionally edited photographs',
-      '100 × 4R printed photographs',
-      'Matte paper',
-      'High-resolution digital delivery'
+      'Up to 5 hours'
     ],
     note: null
   },
@@ -174,17 +98,12 @@ const PACKAGES = [
     cat: 'events',
     name: 'Standard photography',
     price: 12500,
-    blurb: 'Our most-booked stills package for a mid-size wedding or event.',
+    blurb: 'Our most-booked stills package: a three-person crew for a mid-size wedding or event.',
     includes: [
       'Chief Photographer',
       '1 Senior Photographer',
       '1 Associate Photographer',
-      'Up to 5 hours',
-      'Unlimited photographs captured during coverage',
-      'Professionally edited photographs',
-      '100 × 4R printed photographs',
-      'Matte paper',
-      'High-resolution digital delivery'
+      'Up to 5 hours'
     ],
     note: null
   },
@@ -193,17 +112,13 @@ const PACKAGES = [
     cat: 'events',
     name: 'Standard photography plus',
     price: 17500,
-    blurb: 'A four-person crew and a printed album included.',
+    blurb: 'A four-person crew, with an album to keep the day in.',
     includes: [
       'Chief Photographer',
       '2 Senior Photographers',
       '1 Associate Photographer',
       'Up to 5 hours',
-      'Unlimited photographs captured during coverage',
-      'Professionally edited photographs',
-      '200 × 4R printed photographs',
-      'Photo album',
-      'High-resolution digital delivery'
+      'Photo album'
     ],
     note: null
   },
@@ -212,38 +127,28 @@ const PACKAGES = [
     cat: 'events',
     name: 'Exclusive photography',
     price: 20000,
-    blurb: 'The largest stills-only crew, with enlargements for the wall.',
+    blurb: 'The largest stills-only crew: five photographers on one event.',
     includes: [
       'Chief Photographer',
       '2 Senior Photographers',
       '2 Associate Photographers',
       'Up to 5 hours',
-      'Unlimited photographs captured during coverage',
-      'Professionally edited photographs',
-      '200 × 4R printed photographs',
-      '2 × 12L prints',
-      'Photo album',
-      'High-resolution digital delivery'
+      'Photo album'
     ],
     note: null
   },
-  /* PHOTO + CINEMA ----------------------------------------------------- */
+  /* PHOTO + CINEMA — every package here also gets the film and the trailer,
+     which the section says once rather than seven times. ----------------- */
   {
     id: 'super-saver-combo',
     cat: 'cinema',
     name: 'Super saver combo',
     price: 10500,
-    blurb: 'The smallest way to get both photographs and a film from your day.',
+    blurb: 'The smallest way to leave the day with both photographs and a film.',
     includes: [
       '1 Senior Photographer',
       '1 Cinematographer',
-      'Up to 5 hours',
-      'Unlimited photographs captured during coverage',
-      'Professionally edited photographs',
-      'Full HD 1080p wedding / event film',
-      'Short highlight trailer',
-      '100 × 4R printed photographs',
-      'High-resolution digital delivery'
+      'Up to 5 hours'
     ],
     note: null
   },
@@ -252,18 +157,12 @@ const PACKAGES = [
     cat: 'cinema',
     name: 'Regular combo',
     price: 14500,
-    blurb: 'Chief-led photography with a senior cinematographer on the film.',
+    blurb: 'Chief-led photography, with a senior cinematographer on the film.',
     includes: [
       'Chief Photographer',
       '1 Associate Photographer',
       '1 Senior Cinematographer',
-      'Up to 5 hours',
-      'Unlimited photographs captured during coverage',
-      'Professionally edited photographs',
-      'Full HD 1080p video',
-      'Short highlight trailer',
-      '100 × 4R printed photographs',
-      'High-resolution digital delivery'
+      'Up to 5 hours'
     ],
     note: null
   },
@@ -278,13 +177,7 @@ const PACKAGES = [
       '1 Associate Photographer',
       '2 Senior Cinematographers',
       'Up to 5 hours',
-      'Unlimited photographs captured during coverage',
-      'Professionally edited photographs',
-      'Full HD 1080p video',
-      'Short highlight trailer',
-      '200 × 4R printed photographs',
-      'Photo album',
-      'High-resolution digital delivery'
+      'Photo album'
     ],
     note: null
   },
@@ -300,14 +193,7 @@ const PACKAGES = [
       '1 Associate Photographer',
       '2 Cinematographers',
       'Up to 5 hours',
-      'Unlimited photographs captured during coverage',
-      'Professionally edited photographs',
-      'Full HD 1080p video',
-      'Short highlight trailer',
-      '200 × 4R printed photographs',
-      '2 × 12L prints',
-      'Photo album',
-      'High-resolution digital delivery'
+      'Photo album'
     ],
     note: null
   },
@@ -316,20 +202,14 @@ const PACKAGES = [
     cat: 'cinema',
     name: 'Standard combo 1',
     price: 35000,
-    blurb: 'Broader coverage, with the Chief Photographer on the event from start to finish.',
+    blurb: 'Six on the crew, with the Chief Photographer on the event from start to finish.',
     includes: [
       'Chief Photographer — full-event coverage',
       '2 Senior Photographers',
       '1 Associate Photographer',
       '2 Cinematographers',
-      'Full HD 1080p video',
-      'Short highlight trailer',
-      'Unlimited photographs captured during coverage',
-      'Professionally edited photographs',
-      '100 × 5R printed photographs',
-      '2 × 12L prints',
-      'Photo album',
-      'Up to 5 hours'
+      'Up to 5 hours',
+      'Photo album'
     ],
     note: 'The Visual Story Experience is available with this package.'
   },
@@ -344,80 +224,80 @@ const PACKAGES = [
       '2 Senior Photographers',
       '2 Associate Photographers',
       '3 Cinematographers',
-      'Full HD 1080p video',
-      'Short highlight trailer',
-      'Unlimited photographs captured during coverage',
-      'Professionally edited photographs',
-      '200 × 5R printed photographs',
-      '3 × 12L prints',
-      'Photo album',
-      'Up to 5 hours'
+      'Up to 5 hours',
+      'Photo album'
     ],
     note: 'The Visual Story Experience is available with this package.'
   },
   {
-    id: 'premium-combo-1',
+    id: 'premium-combo',
     cat: 'cinema',
-    name: 'Premium combo 1',
+    name: 'Premium combo',
     price: 55000,
-    blurb: 'Our most comprehensive package: a ten-person crew and an extra hour of coverage.',
+    blurb: 'A ten-person crew and an extra hour, for one event covered at full scale.',
     includes: [
       'Chief Photographer',
       '3 Senior Photographers',
       '2 Associate Photographers',
       '4 Cinematographers',
-      'Full HD 1080p video',
-      'Short highlight trailer',
-      'Unlimited photographs captured during coverage',
-      'Professionally edited photographs',
-      '200 × 5R printed photographs',
-      '4 × 12L prints',
-      'Photo album',
-      'Up to 6 hours'
+      'Up to 6 hours',
+      'Photo album'
     ],
     note: 'The Visual Story Experience is available with this package.'
   },
-  /* WEDDING STORIES ---------------------------------------------------- */
+  /* The top of the ladder. It is the Premium crew at two events instead of
+     one — that second day is where the price comes from — with the
+     cinematographers at senior grade and the Experience included rather than
+     offered. Nothing in it is a service the packages above don't already
+     describe. */
+  {
+    id: 'exclusive-combo',
+    cat: 'cinema',
+    name: 'Exclusive combo',
+    price: 100000,
+    blurb: 'Both event days covered by the full ten-person crew, with the Experience session included.',
+    includes: [
+      'Chief Photographer — full-event coverage',
+      '3 Senior Photographers',
+      '2 Associate Photographers',
+      '4 Senior Cinematographers',
+      'Two events on separate days',
+      'Up to 6 hours at each event',
+      'Photo album'
+    ],
+    note: 'The Visual Story Experience is included with this package.'
+  },
+  /* THE WEDDING PACKAGE -------------------------------------------------- */
   {
     id: 'wedding-stories',
     cat: 'weddings',
     name: 'Wedding stories',
     price: 8500,
     priceSuffix: 'per event',
-    blurb: 'A streamlined wedding package focused on the emotions, people and moments that make your day yours.',
+    blurb: 'One streamlined package for the whole day, focused on the emotions, people and moments that make it yours.',
     includes: [
       '1 Senior Photographer',
       '1 Associate Photographer',
       'Up to 4 hours',
-      'Unlimited photographs captured during coverage',
-      'Professionally post-processed photographs',
-      '100 specially retouched photographs',
-      '100 × 5R prints',
-      'Matte / glossy paper',
-      'High-resolution digital delivery'
+      '100 specially retouched photographs'
     ],
-    note: 'Delivered in about 2 weeks.'
+    note: null
   }
 ];
 
 /* THE VISUAL STORY EXPERIENCE ---------------------------------------------
-   Add-ons offered with selected Standard and Premium Combo packages.     */
+   Sessions offered with the three packages whose note says so.            */
 
-const EXPERIENCE = {
-  title: 'The Visual Story Experience',
-  lead: 'Selected Standard and Premium Combo packages can be extended with sessions built around the two of you, directed by the Chief Photographer.',
-  items: [
-    'Bride and groom portrait session',
-    'Couple photography',
-    'Conceptual photography',
-    'Family portraits',
-    'Candid moments',
-    'Pre-wedding and post-wedding sessions',
-    'Creative storytelling coverage',
-    'Chief Photographer-led conceptual direction'
-  ],
-  note: 'Pre-wedding and post-wedding sessions are available with selected combo packages. Ask us when you enquire.'
-};
+const EXPERIENCE = [
+  'Bride and groom portrait session',
+  'Couple photography',
+  'Conceptual photography',
+  'Family portraits',
+  'Candid moments',
+  'Pre-wedding and post-wedding sessions',
+  'Creative storytelling coverage',
+  'Chief Photographer-led conceptual direction'
+];
 
 /* BOOKING & TERMS ---------------------------------------------------------
    Written as term + plain-language explanation.                           */
@@ -445,19 +325,14 @@ const TERMS = [
   },
   {
     term: 'Delivery',
-    text: 'Everything arrives digitally in high resolution. Photography packages take about 2 weeks. Larger photography and cinematography projects take 20–30 working days, depending on the scale of the event.'
+    text: 'Photography packages take about 2 weeks. Larger photography and cinematography projects take 20–30 working days, depending on the scale of the event.'
   },
   {
-    term: 'Prints and albums',
-    text: 'Print sizes, quantities, paper type and album specification follow the package you choose.'
+    term: 'Albums and prints',
+    text: 'Every package is delivered as digital files; loose prints and enlargements are not included in any of them. The packages that list a photo album include it, in the specification that package sets.'
   }
 ];
 
-const CONTACT = {
-  facebook: 'https://www.facebook.com/Visualstory984/',
-  handle: 'Visualstory984',
-  ask: 'Send us your event date, location and the package you have in mind.'
-};
+/* Read by index.html through assets/js/site.js. Nothing to edit below. */
+window.VS = { CURRENCY, CATEGORIES, PACKAGES, EXPERIENCE, TERMS };
 
-/* Made available to index.html and facebook-kit.html. Nothing to edit below. */
-window.VS = { CURRENCY, CATEGORIES, PACKAGES, EXPERIENCE, TERMS, CONTACT };
