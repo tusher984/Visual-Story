@@ -312,8 +312,8 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 2.85rem); }
 .end h2 { max-width: 18ch; }
 .end__lede { max-width: 48ch; margin-top: 1.1rem; color: var(--quiet); }
 
-/* A colophon rather than a footer row: the logotype, what the studio believes,
-   what it shoots, and where to find it — four columns that collapse in order. */
+/* A colophon rather than a footer row: the logotype, what the studio believes
+   and what it shoots — three columns that collapse in order. */
 .sign {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(13rem, 100%), 1fr));
@@ -334,12 +334,6 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 2.85rem); }
 }
 
 .sign p { max-width: 34ch; }
-.sign a { text-decoration-color: var(--quiet); }
-.sign a:hover { color: var(--print); }
-
-/* One address, on its own line under the colophon. */
-.sign__links { display: grid; gap: 0.3rem; justify-items: start; }
-.sign__links a { overflow-wrap: anywhere; }
 
 /* ---- small screens ------------------------------------------------------- */
 
